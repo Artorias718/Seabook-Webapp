@@ -1,15 +1,13 @@
-var path = require('path'); //con npm run-script watch possono metterlo in watch mode e cambia real time, rigenera bundle.js mentre edito il code
-
-//questo file è usato per assemblare tutto
+var path = require('path');
 
 module.exports = {
-    entry: './src/main/js/app.js', //definisce il "main" del javascript
+    entry: './src/main/js/app.js',
     devtool: 'sourcemaps',
     cache: true,
     mode: 'development',
     output: {
         path: __dirname,
-        filename: './src/main/resources/static/built/bundle.js' //tutto il custome code mandato con le require() è messo in questo file
+        filename: './src/main/resources/static/built/bundle.js'
     },
     module: {
         rules: [
