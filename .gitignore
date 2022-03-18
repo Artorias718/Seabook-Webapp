@@ -34,3 +34,16 @@ build/
 
 target
 
+### react and spring data rest ###
+bower_components
+node_modules
+node
+*.log
+asciidoctor.css
+README.html
+built
+dump.rdb
+package-lock.json
+org.eclipse.*
+settings.json
+
