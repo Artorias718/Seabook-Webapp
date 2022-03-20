@@ -34121,7 +34121,6 @@ var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/in
 
 var client = __webpack_require__(/*! ./client */ "./src/main/js/client.js"); // <3>
 // end::vars[]
-// tag::app[]
 
 
 var App = /*#__PURE__*/function (_React$Component) {
@@ -34130,15 +34129,6 @@ var App = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(App);
 
   // <1>
-
-  /*constructor(props) {
-      super(props);
-      this.state = {
-          error: null,
-          isLoaded: false,
-          items: []
-      };
-  }*/
   function App(props) {
     var _this;
 
@@ -34146,7 +34136,7 @@ var App = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      customers: []
+      stabilimenti: []
     };
     return _this;
   }
@@ -34157,14 +34147,17 @@ var App = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       // <2>
+      // con spring data rest backend
       client({
         method: 'GET',
-        path: 'http://localhost:8080/api/v1/customers'
+        path: 'http://localhost:8080/api/stabilimentoes'
       }).done(function (response) {
-        // this.setState({customers: response.entity._embedded.customers});
         _this2.setState({
-          customers: response.entity
-        });
+          stabilimenti: response.entity._embedded.stabilimentoes
+        }); // senza spring data rest backend
+        // client({method: 'GET', path: 'http://localhost:8080/api/v1/customers'}).done(response => {
+        // this.setState({customers: response.entity});
+
       });
     }
   }, {
@@ -34174,8 +34167,8 @@ var App = /*#__PURE__*/function (_React$Component) {
       return (
         /*#__PURE__*/
         //<EmployeeList employees={this.state.employees}/>
-        React.createElement(CustomersList, {
-          customers: this.state.customers
+        React.createElement(StabilimentiList, {
+          stabilimenti: this.state.stabilimenti
         })
       );
     }
@@ -34227,59 +34220,179 @@ var App = /*#__PURE__*/function (_React$Component) {
 // tag::employee-list[]
 
 
-var CustomersList = /*#__PURE__*/function (_React$Component2) {
-  _inherits(CustomersList, _React$Component2);
+var StabilimentiList = /*#__PURE__*/function (_React$Component2) {
+  _inherits(StabilimentiList, _React$Component2);
 
-  var _super2 = _createSuper(CustomersList);
+  var _super2 = _createSuper(StabilimentiList);
 
-  function CustomersList() {
-    _classCallCheck(this, CustomersList);
+  function StabilimentiList() {
+    _classCallCheck(this, StabilimentiList);
 
     return _super2.apply(this, arguments);
   }
 
-  _createClass(CustomersList, [{
+  _createClass(StabilimentiList, [{
     key: "render",
     value: function render() {
-      var customers = this.props.customers.map(function (customer) {
-        return /*#__PURE__*/React.createElement(Customer, {
-          key: customer.id,
-          customer: customer
+      var stabilimenti = this.props.stabilimenti.map(function (stabilimento) {
+        return /*#__PURE__*/React.createElement(Stabilimento, {
+          key: stabilimento._links.self.href,
+          stabilimento: stabilimento
         });
       });
-      return /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "First Name"), /*#__PURE__*/React.createElement("th", null, "Last Name"), /*#__PURE__*/React.createElement("th", null, "Description")), customers));
+      return /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Name"), /*#__PURE__*/React.createElement("th", null, "Address"), /*#__PURE__*/React.createElement("th", null, "Phone Number"), /*#__PURE__*/React.createElement("th", null, "Capacity")), stabilimenti));
     }
   }]);
 
-  return CustomersList;
-}(React.Component); // end::employee-list[]
-// tag::employee[]
+  return StabilimentiList;
+}(React.Component); // tag::employee[]
 
 
-var Customer = /*#__PURE__*/function (_React$Component3) {
-  _inherits(Customer, _React$Component3);
+var Stabilimento = /*#__PURE__*/function (_React$Component3) {
+  _inherits(Stabilimento, _React$Component3);
 
-  var _super3 = _createSuper(Customer);
+  var _super3 = _createSuper(Stabilimento);
 
-  function Customer() {
-    _classCallCheck(this, Customer);
+  function Stabilimento() {
+    _classCallCheck(this, Stabilimento);
 
     return _super3.apply(this, arguments);
   }
 
-  _createClass(Customer, [{
+  _createClass(Stabilimento, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.customer.name), /*#__PURE__*/React.createElement("td", null, this.props.customer.age), /*#__PURE__*/React.createElement("td", null, this.props.customer.active));
+      return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.stabilimento.name), /*#__PURE__*/React.createElement("td", null, this.props.stabilimento.address), /*#__PURE__*/React.createElement("td", null, this.props.stabilimento.phoneNumber), /*#__PURE__*/React.createElement("td", null, this.props.stabilimento.spotsNumber));
     }
   }]);
 
-  return Customer;
+  return Stabilimento;
 }(React.Component); // end::employee[]
 // tag::render[]
 
 
 ReactDOM.render( /*#__PURE__*/React.createElement(App, null), document.getElementById('react')); // end::render[]
+
+/*// tag::app[]
+class App extends React.Component { // <1>
+
+    /*constructor(props) {
+        super(props);
+        this.state = {
+            error: null,
+            isLoaded: false,
+            items: []
+        };
+    }
+
+    constructor(props) {
+        super(props);
+        this.state = {customers: []};
+    }
+
+    componentDidMount() { // <2>
+        // con spring data rest backend
+        client({method: 'GET', path: 'http://localhost:8080/api/customers'}).done(response => {
+            this.setState({customers: response.entity._embedded.customers});
+        // senza spring data rest backend
+        // client({method: 'GET', path: 'http://localhost:8080/api/v1/customers'}).done(response => {
+            // this.setState({customers: response.entity});
+        });
+    }
+
+    render() { // <3>
+        return (
+            //<EmployeeList employees={this.state.employees}/>
+            <CustomersList customers={this.state.customers}/>
+        )
+    }
+
+    /*componentDidMount() {
+        fetch("http://localhost:8080/api/v1/customers")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result
+                    });
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
+
+    render() {
+        const { error, isLoaded, items } = this.state;
+        if (error) {
+            return <div>Error: {error.message}</div>;
+        } else if (!isLoaded) {
+            return <div>Loading...</div>;
+        } else {
+            return (
+                <CustomersList customers={this.state.items}/>
+                /*<ul>
+                    {items.map(item => (
+                        <li key={item.id}>
+                            {item.name} {item.age}
+                        </li>
+                    ))}
+                </ul>
+            );
+        }
+    }
+}
+// end::app[]
+
+// tag::employee-list[]
+class CustomersList extends React.Component{
+    render() {
+        const customers = this.props.customers.map(customer =>
+            <Customer key={customer.id} customer={customer}/>
+        );
+        return (
+            <table>
+                <tbody>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Description</th>
+                </tr>
+                {customers}
+                </tbody>
+            </table>
+        )
+    }
+}
+// end::employee-list[]
+
+// tag::employee[]
+class Customer extends React.Component{
+    render() {
+        return (
+            <tr>
+                <td>{this.props.customer.name}</td>
+                <td>{this.props.customer.age}</td>
+                <td>{this.props.customer.active}</td>
+            </tr>
+        )
+    }
+}
+// end::employee[]
+
+// tag::render[]
+ReactDOM.render(
+    <App />,
+    document.getElementById('react')
+)
+// end::render[]*/
 
 /***/ }),
 
