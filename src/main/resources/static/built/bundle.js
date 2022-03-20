@@ -34130,6 +34130,15 @@ var App = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(App);
 
   // <1>
+
+  /*constructor(props) {
+      super(props);
+      this.state = {
+          error: null,
+          isLoaded: false,
+          items: []
+      };
+  }*/
   function App(props) {
     var _this;
 
@@ -34137,9 +34146,7 @@ var App = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      error: null,
-      isLoaded: false,
-      items: []
+      customers: []
     };
     return _this;
   }
@@ -34149,49 +34156,70 @@ var App = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      fetch("http://localhost:8080/api/v1/customers").then(function (res) {
-        return res.json();
-      }).then(function (result) {
+      // <2>
+      client({
+        method: 'GET',
+        path: 'http://localhost:8080/api/v1/customers'
+      }).done(function (response) {
+        // this.setState({customers: response.entity._embedded.customers});
         _this2.setState({
-          isLoaded: true,
-          items: result
-        });
-      }, // Note: it's important to handle errors here
-      // instead of a catch() block so that we don't swallow
-      // exceptions from actual bugs in components.
-      function (error) {
-        _this2.setState({
-          isLoaded: true,
-          error: error
+          customers: response.entity
         });
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$state = this.state,
-          error = _this$state.error,
-          isLoaded = _this$state.isLoaded,
-          items = _this$state.items;
-
-      if (error) {
-        return /*#__PURE__*/React.createElement("div", null, "Error: ", error.message);
-      } else if (!isLoaded) {
-        return /*#__PURE__*/React.createElement("div", null, "Loading...");
-      } else {
-        return /*#__PURE__*/React.createElement(CustomersList, {
-          customers: this.state.items
+      // <3>
+      return (
+        /*#__PURE__*/
+        //<EmployeeList employees={this.state.employees}/>
+        React.createElement(CustomersList, {
+          customers: this.state.customers
         })
-        /*<ul>
-            {items.map(item => (
-                <li key={item.id}>
-                    {item.name} {item.age}
-                </li>
-            ))}
-        </ul>*/
-        ;
-      }
+      );
     }
+    /*componentDidMount() {
+        fetch("http://localhost:8080/api/v1/customers")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result
+                    });
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
+     render() {
+        const { error, isLoaded, items } = this.state;
+        if (error) {
+            return <div>Error: {error.message}</div>;
+        } else if (!isLoaded) {
+            return <div>Loading...</div>;
+        } else {
+            return (
+                <CustomersList customers={this.state.items}/>
+                /*<ul>
+                    {items.map(item => (
+                        <li key={item.id}>
+                            {item.name} {item.age}
+                        </li>
+                    ))}
+                </ul>
+            );
+        }
+    }*/
+
   }]);
 
   return App;

@@ -9,16 +9,38 @@ const client = require('./client'); // <3>
 // tag::app[]
 class App extends React.Component { // <1>
 
-    constructor(props) {
+    /*constructor(props) {
         super(props);
         this.state = {
             error: null,
             isLoaded: false,
             items: []
         };
+    }*/
+
+    constructor(props) {
+        super(props);
+        this.state = {customers: []};
     }
 
-    componentDidMount() {
+    componentDidMount() { // <2>
+        // con spring data rest backend
+        client({method: 'GET', path: 'http://localhost:8080/api/customers'}).done(response => {
+            this.setState({customers: response.entity._embedded.customers});
+        // senza spring data rest backend
+        // client({method: 'GET', path: 'http://localhost:8080/api/v1/customers'}).done(response => {
+            // this.setState({customers: response.entity});
+        });
+    }
+
+    render() { // <3>
+        return (
+            //<EmployeeList employees={this.state.employees}/>
+            <CustomersList customers={this.state.customers}/>
+        )
+    }
+
+    /*componentDidMount() {
         fetch("http://localhost:8080/api/v1/customers")
             .then(res => res.json())
             .then(
@@ -55,10 +77,10 @@ class App extends React.Component { // <1>
                             {item.name} {item.age}
                         </li>
                     ))}
-                </ul>*/
+                </ul>
             );
         }
-    }
+    }*/
 }
 // end::app[]
 
