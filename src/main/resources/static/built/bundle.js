@@ -34237,10 +34237,13 @@ var StabilimentiList = /*#__PURE__*/function (_React$Component2) {
       var stabilimenti = this.props.stabilimenti.map(function (stabilimento) {
         return /*#__PURE__*/React.createElement(Stabilimento, {
           key: stabilimento._links.self.href,
-          stabilimento: stabilimento
+          stabilimento: stabilimento,
+          shref: stabilimento._links.self.href
         });
       });
-      return /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Name"), /*#__PURE__*/React.createElement("th", null, "Address"), /*#__PURE__*/React.createElement("th", null, "Phone Number"), /*#__PURE__*/React.createElement("th", null, "Capacity")), stabilimenti));
+      return /*#__PURE__*/React.createElement("div", {
+        className: "row row-cols-1 row-cols-md-2 g-4"
+      }, stabilimenti);
     }
   }]);
 
@@ -34262,13 +34265,99 @@ var Stabilimento = /*#__PURE__*/function (_React$Component3) {
   _createClass(Stabilimento, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.stabilimento.name), /*#__PURE__*/React.createElement("td", null, this.props.stabilimento.address), /*#__PURE__*/React.createElement("td", null, this.props.stabilimento.phoneNumber), /*#__PURE__*/React.createElement("td", null, this.props.stabilimento.spotsNumber));
+      return /*#__PURE__*/React.createElement("div", {
+        className: "col-lg-6 col-xxl-4 mb-5"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "card mb-4"
+      }, /*#__PURE__*/React.createElement("a", {
+        href: this.props.shref
+      }, /*#__PURE__*/React.createElement("img", {
+        className: "card-img-top",
+        src: "https://dummyimage.com/700x350/dee2e6/6c757d.jpg",
+        alt: "..."
+      })), /*#__PURE__*/React.createElement("div", {
+        className: "card-body"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "small text-muted"
+      }, "January 1, 2021"), /*#__PURE__*/React.createElement("h2", {
+        className: "card-title h4"
+      }, this.props.stabilimento.name), /*#__PURE__*/React.createElement("p", {
+        className: "card-text"
+      }, this.props.stabilimento.address), /*#__PURE__*/React.createElement("p", {
+        className: "card-text"
+      }, "Phone: ", this.props.stabilimento.phoneNumber), /*#__PURE__*/React.createElement("p", {
+        className: "card-text"
+      }, "Capacity: ", this.props.stabilimento.spotsNumber), /*#__PURE__*/React.createElement("a", {
+        className: "btn btn-primary",
+        href: this.props.shref
+      }, "Read more \u2192"))));
     }
   }]);
 
   return Stabilimento;
 }(React.Component); // end::employee[]
-// tag::render[]
+
+
+var SearchForm = /*#__PURE__*/function (_React$Component4) {
+  _inherits(SearchForm, _React$Component4);
+
+  var _super4 = _createSuper(SearchForm);
+
+  function SearchForm(props) {
+    var _this3;
+
+    _classCallCheck(this, SearchForm);
+
+    _this3 = _super4.call(this, props);
+    _this3.state = {
+      value: ''
+    };
+    _this3.handleChange = _this3.handleChange.bind(_assertThisInitialized(_this3));
+    _this3.handleSubmit = _this3.handleSubmit.bind(_assertThisInitialized(_this3));
+    return _this3;
+  }
+
+  _createClass(SearchForm, [{
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState({
+        value: event.target.value
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      alert('A name was submitted: ' + this.state.value);
+      event.preventDefault(); // faccio partire la get per recuperare i posti in base alla vicinanza
+      // ho quello che e' stato iscritto nella textbox in this.state.value
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("form", {
+        className: "form-subscribe",
+        onSubmit: this.handleSubmit
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "col"
+      }, /*#__PURE__*/React.createElement("input", {
+        type: "text",
+        className: "form-control form-control-lg required",
+        placeholder: "Dove vuoi andare?",
+        value: this.state.value,
+        onChange: this.handleChange
+      })), /*#__PURE__*/React.createElement("div", {
+        className: "col-auto"
+      }, /*#__PURE__*/React.createElement("button", {
+        type: "submit",
+        className: "btn btn-primary btn-lg"
+      }, "Cerca"))));
+    }
+  }]);
+
+  return SearchForm;
+}(React.Component); // tag::render[]
 
 
 ReactDOM.render( /*#__PURE__*/React.createElement(App, null), document.getElementById('react')); // end::render[]

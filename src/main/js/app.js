@@ -78,20 +78,12 @@ class App extends React.Component { // <1>
 class StabilimentiList extends React.Component{
     render() {
         const stabilimenti = this.props.stabilimenti.map(stabilimento =>
-            <Stabilimento key={stabilimento._links.self.href} stabilimento={stabilimento}/>
+            <Stabilimento key={stabilimento._links.self.href} stabilimento={stabilimento} shref={stabilimento._links.self.href}/>
         );
         return (
-            <table>
-                <tbody>
-                <tr>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Phone Number</th>
-                    <th>Capacity</th>
-                </tr>
+            <div className="row row-cols-1 row-cols-md-2 g-4">
                 {stabilimenti}
-                </tbody>
-            </table>
+            </div>
         )
     }
 }
@@ -100,16 +92,59 @@ class StabilimentiList extends React.Component{
 class Stabilimento extends React.Component{
     render() {
         return (
-            <tr>
-                <td>{this.props.stabilimento.name}</td>
-                <td>{this.props.stabilimento.address}</td>
-                <td>{this.props.stabilimento.phoneNumber}</td>
-                <td>{this.props.stabilimento.spotsNumber}</td>
-            </tr>
+            <div className="col-lg-6 col-xxl-4 mb-5">
+                <div className="card mb-4">
+                    <a href={this.props.shref}><img className="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                    <div className="card-body">
+                        <div className="small text-muted">January 1, 2021</div>
+                        <h2 className="card-title h4">{this.props.stabilimento.name}</h2>
+                        <p className="card-text">{this.props.stabilimento.address}</p>
+                        <p className="card-text">Phone: {this.props.stabilimento.phoneNumber}</p>
+                        <p className="card-text">Capacity: {this.props.stabilimento.spotsNumber}</p>
+                        <a className="btn btn-primary" href={this.props.shref}>Read more →</a>
+                    </div>
+                </div>
+            </div>
         )
     }
 }
 // end::employee[]
+
+class SearchForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {value: ''};
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+    handleSubmit(event) {
+        alert('A name was submitted: ' + this.state.value);
+        event.preventDefault();
+        // faccio partire la get per recuperare i posti in base alla vicinanza
+        // ho quello che e' stato iscritto nella textbox in this.state.value
+    }
+
+    render() {
+        return (
+            <form className="form-subscribe" onSubmit={this.handleSubmit}>
+                <div className="row">
+                    <div className="col">
+                        <input type="text" className="form-control form-control-lg required"
+                               placeholder="Dove vuoi andare?" value={this.state.value} onChange={this.handleChange}/>
+                    </div>
+                    <div className="col-auto">
+                        <button type="submit" className="btn btn-primary btn-lg">Cerca</button>
+                    </div>
+                </div>
+            </form>
+        );
+    }
+}
 
 // tag::render[]
 ReactDOM.render(
@@ -117,7 +152,6 @@ ReactDOM.render(
     document.getElementById('react')
 )
 // end::render[]
-
 
 /*// tag::app[]
 class App extends React.Component { // <1>
