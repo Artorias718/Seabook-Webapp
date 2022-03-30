@@ -1,4 +1,4 @@
-export default function App() {
+export default function SearchBox() {
     return (
         <div>
             <h1>Bookkeeper!</h1>

@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import { Link, Outlet } from "react-router-dom";
-import { getInvoices } from "../data";
+import { getStabilimenti } from "../data";
 
-export default function Invoices() {
-    let invoices = getInvoices();
+export default function Stabilimenti() {
+    let stabilimenti = getStabilimenti();
     return (
         <div style={{ display: "flex" }}>
             <nav
@@ -13,13 +13,13 @@ export default function Invoices() {
                     padding: "1rem",
                 }}
             >
-                {invoices.map((invoice) => (
+                {stabilimenti.map((stabilimento) => (
                     <Link
                         style={{ display: "block", margin: "1rem 0" }}
-                        to={`/invoices/${invoice.number}`}
-                        key={invoice.number}
+                        to={`/stabilimenti/${stabilimento.id}`}
+                        key={stabilimento.id}
                     >
-                        {invoice.name}
+                        {stabilimento.name}
                     </Link>
                 ))}
             </nav>
