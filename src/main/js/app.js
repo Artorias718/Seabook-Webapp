@@ -13,6 +13,16 @@ import Invoice from "./routes/invoice";
 import Stabilimenti from "./routes/stabilimenti";
 import Stabilimento from "./routes/stabilimento";
 
+require("babel-core/register");
+require("babel-polyfill");
+
+/*
+* npm install react-router-dom@6
+* npm install axios
+* npm i -D babel-core babel-polyfill babel-preset-es2015 babel-preset-stage-0 babel-loader
+* npm install bootstrap
+* */
+
 const rootElement = document.getElementById("root");
 render(
     <BrowserRouter>
