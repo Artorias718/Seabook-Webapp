@@ -50094,55 +50094,67 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function Stabilimenti() {
-  //let stabilimenti = getStabilimenti();
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
       _useState2 = _slicedToArray(_useState, 2),
       stabilimenti = _useState2[0],
-      setStabilimenti = _useState2[1];
+      setStabilimenti = _useState2[1]; //const [query, setQuery] = useState('');
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState4 = _slicedToArray(_useState3, 2),
-      query = _useState4[0],
-      setQuery = _useState4[1];
+      isLoading = _useState4[0],
+      setIsLoading = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      isError = _useState6[0],
+      setIsError = _useState6[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var ignore = false;
-
-    function fetchData() {
-      return _fetchData.apply(this, arguments);
-    }
-
-    function _fetchData() {
-      _fetchData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    var fetchData = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         var result;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default()('http://localhost:8080/api/v1/stabilimenti' + query);
+                setIsError(false);
+                setIsLoading(true);
+                _context.prev = 2;
+                _context.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default()('http://localhost:8080/api/v1/stabilimenti');
 
-              case 2:
+              case 5:
                 result = _context.sent;
-                if (!ignore) setStabilimenti(result.data);
+                setStabilimenti(result.data);
+                _context.next = 12;
+                break;
 
-              case 4:
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](2);
+                setIsError(true);
+
+              case 12:
+                setIsLoading(false);
+
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[2, 9]]);
       }));
-      return _fetchData.apply(this, arguments);
-    }
+
+      return function fetchData() {
+        return _ref.apply(this, arguments);
+      };
+    }();
 
     fetchData();
-    return function () {
-      ignore = true;
-    };
-  }, [query]); // Only re-run the effect if query changes
+  }, []); // Only re-run the effect if query changes
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, isError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Something went wrong ..."), isLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Loading ...") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
     style: {
       display: "flex"
     }
@@ -50151,12 +50163,7 @@ function Stabilimenti() {
       borderRight: "solid 1px",
       padding: "1rem"
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
-    value: query,
-    onChange: function onChange(e) {
-      return setQuery(e.target.value);
-    }
-  }), stabilimenti.map(function (item) {
+  }, stabilimenti.map(function (item) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
       style: {
         display: "block",
@@ -50210,61 +50217,74 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function Stabilimento() {
   var params = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["useParams"])();
-  var stabilimentoID = parseInt(params.stabilimentoId, 10);
+  var stabilimentoId = params.stabilimentoId;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
       _useState2 = _slicedToArray(_useState, 2),
       stabilimento = _useState2[0],
-      setStabilimento = _useState2[1];
+      setStabilimento = _useState2[1]; //const [query, setQuery] = useState('1');
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(stabilimentoID),
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState4 = _slicedToArray(_useState3, 2),
-      query = _useState4[0],
-      setQuery = _useState4[1]; // setQuery(params.stabilimentoId);
+      isLoading = _useState4[0],
+      setIsLoading = _useState4[1];
 
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      isError = _useState6[0],
+      setIsError = _useState6[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var ignore = false;
-
-    function fetchData() {
-      return _fetchData.apply(this, arguments);
-    }
-
-    function _fetchData() {
-      _fetchData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    var fetchData = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         var result;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default()('http://localhost:8080/api/v1/stabilimenti/' + stabilimentoID);
+                setIsError(false);
+                setIsLoading(true);
+                _context.prev = 2;
+                _context.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default()('http://localhost:8080/api/v1/stabilimenti/' + stabilimentoId);
 
-              case 2:
+              case 5:
                 result = _context.sent;
-                if (!ignore) setStabilimento(result.data);
+                setStabilimento(result.data);
+                _context.next = 13;
+                break;
 
-              case 4:
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](2);
+                console.log(_context.t0);
+                setIsError(true);
+
+              case 13:
+                setIsLoading(false);
+
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[2, 9]]);
       }));
-      return _fetchData.apply(this, arguments);
-    }
+
+      return function fetchData() {
+        return _ref.apply(this, arguments);
+      };
+    }();
 
     fetchData();
-    return function () {
-      ignore = true;
-    };
-  }, []); // Only re-run the effect if query changes
+  }, [stabilimentoId]); // Only re-run the effect if stabilimentoId changes
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("main", {
     style: {
       padding: "1rem"
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h2", null, stabilimento.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("p", null, "Address: ", stabilimento.address), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("p", null, "Phone number: ", stabilimento.phoneNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("p", null, "Capacity: ", stabilimento.spotsNumber));
+  }, isError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Something went wrong ..."), isLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Loading ...") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h2", null, stabilimento.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("p", null, "Address: ", stabilimento.address), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("p", null, "Phone number: ", stabilimento.phoneNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("p", null, "Capacity: ", stabilimento.spotsNumber)));
 }
 
 /***/ }),
