@@ -49925,13 +49925,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! babel-core/register */ "./node_modules/babel-core/register.js");
 
 __webpack_require__(/*! babel-polyfill */ "./node_modules/babel-polyfill/lib/index.js");
-/*
-* npm install react-router-dom@6
-* npm install axios
-* npm i -D babel-core babel-polyfill babel-preset-es2015 babel-preset-stage-0 babel-loader
-* npm install bootstrap
-* */
-
 
 var rootElement = document.getElementById("root");
 Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_2__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Routes"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
@@ -50152,7 +50145,7 @@ function Stabilimenti() {
     }();
 
     fetchData();
-  }, []); // Only re-run the effect if query changes
+  }, []); // with [] run effect once
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, isError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Something went wrong ..."), isLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Loading ...") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
     style: {
@@ -50284,7 +50277,130 @@ function Stabilimento() {
     style: {
       padding: "1rem"
     }
-  }, isError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Something went wrong ..."), isLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Loading ...") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h2", null, stabilimento.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("p", null, "Address: ", stabilimento.address), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("p", null, "Phone number: ", stabilimento.phoneNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("p", null, "Capacity: ", stabilimento.spotsNumber)));
+  }, isError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Something went wrong ..."), isLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Loading ...") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h2", null, stabilimento.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("p", null, "Address: ", stabilimento.address), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("p", null, "Phone number: ", stabilimento.phoneNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("p", null, "Capacity: ", stabilimento.spotsNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](MappaPosti, {
+    stabilimentoId: stabilimentoId,
+    rows: stabilimento.rowQty,
+    columns: stabilimento.columnQty
+  })) // fragment con la lista di posti/spot
+  );
+}
+
+function MappaPosti(_ref2) {
+  var stabilimentoId = _ref2.stabilimentoId,
+      rows = _ref2.rows,
+      columns = _ref2.columns;
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState8 = _slicedToArray(_useState7, 2),
+      spotList = _useState8[0],
+      setSpotList = _useState8[1]; //const [query, setQuery] = useState('1');
+
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState10 = _slicedToArray(_useState9, 2),
+      isLoading = _useState10[0],
+      setIsLoading = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState12 = _slicedToArray(_useState11, 2),
+      isError = _useState12[0],
+      setIsError = _useState12[1]; // vanno in un component spot
+  // const[booked, isBooked] = useState(false);
+  // const[active, isActive] = useState(false);
+
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    var fetchData = /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var result;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                setIsError(false);
+                setIsLoading(true);
+                _context2.prev = 2;
+                _context2.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default()('http://localhost:8080/api/v1/stabilimenti/' + stabilimentoId + '/lista_Posti');
+
+              case 5:
+                result = _context2.sent;
+                setSpotList(result.data);
+                _context2.next = 13;
+                break;
+
+              case 9:
+                _context2.prev = 9;
+                _context2.t0 = _context2["catch"](2);
+                console.log(_context2.t0);
+                setIsError(true);
+
+              case 13:
+                setIsLoading(false);
+
+              case 14:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[2, 9]]);
+      }));
+
+      return function fetchData() {
+        return _ref3.apply(this, arguments);
+      };
+    }();
+
+    fetchData();
+  }, []);
+  var tableRows = []; // spotList.forEach((spot) => (console.log(spot.row + " " + spot.column)));
+  // spotList.forEach((spot) => (console.log(spot)));
+  // for (let w = 0; w < spotList.length; w++) {
+  //     // console.log(spotList[w]);
+  //
+  // }
+
+  console.log(rows);
+  console.log(columns);
+
+  var _loop = function _loop(i) {
+    var rw = [];
+
+    var _loop2 = function _loop2(j) {
+      console.log(i + " " + j);
+      rw.push(spotList.find(function (spot) {
+        return spot.row === i && spot.column === j;
+      }));
+      console.log(spotList.find(function (spot) {
+        return spot.row === i && spot.column === j;
+      }));
+    };
+
+    for (var j = 0; j < columns; j++) {
+      _loop2(j);
+    }
+
+    tableRows.push(rw);
+  };
+
+  for (var i = 0; i < rows; i++) {
+    _loop(i);
+  }
+
+  console.log(tableRows);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("section", {
+    style: {
+      padding: "1rem"
+    }
+  }, isError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Something went wrong ..."), isLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Loading ...") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("tbody", null, tableRows.map(function (rw, index) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("tr", {
+      key: index
+    }, rw.map(function (spot) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
+        key: spot.id
+      }, "|", spot.row, ",", spot.column, "|"));
+    }));
+  })))));
 }
 
 /***/ }),

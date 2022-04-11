@@ -26,7 +26,7 @@ export default function Stabilimenti() {
         };
 
         fetchData();
-    }, []); // Only re-run the effect if query changes
+    }, []); // with [] run effect once
 
     return (
         <Fragment>
