@@ -83,7 +83,7 @@ function MappaPosti({ stabilimentoId, rows, columns }) {
         };
 
         fetchData();
-    }, []);
+    }, [stabilimentoId]);
 
 
     // let tableRows = [];

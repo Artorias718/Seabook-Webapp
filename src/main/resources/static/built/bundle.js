@@ -50352,55 +50352,36 @@ function MappaPosti(_ref2) {
     }();
 
     fetchData();
-  }, []);
-  var tableRows = []; // spotList.forEach((spot) => (console.log(spot.row + " " + spot.column)));
-  // spotList.forEach((spot) => (console.log(spot)));
-  // for (let w = 0; w < spotList.length; w++) {
-  //     // console.log(spotList[w]);
+  }, [stabilimentoId]); // let tableRows = [];
   //
+  // // spotList.forEach((spot) => (console.log(spot.row + " " + spot.column)));
+  // // spotList.forEach((spot) => (console.log(spot)));
+  // // for (let w = 0; w < spotList.length; w++) {
+  // //     // console.log(spotList[w]);
+  // //
+  // // }
+  // console.log(rows);
+  // console.log(columns);
+  // for (let i = 0; i < rows; i++) {
+  //     let rw = [];
+  //     for (let j = 0; j < columns; j++) {
+  //         console.log(i + " " + j);
+  //         rw.push(spotList.find(spot => (spot.row === i && spot.column === j)));
+  //         console.log(spotList.find(spot => (spot.row === i && spot.column === j)));
+  //     }
+  //     tableRows.push(rw);
   // }
+  // console.log(tableRows);
 
-  console.log(rows);
-  console.log(columns);
-
-  var _loop = function _loop(i) {
-    var rw = [];
-
-    var _loop2 = function _loop2(j) {
-      console.log(i + " " + j);
-      rw.push(spotList.find(function (spot) {
-        return spot.row === i && spot.column === j;
-      }));
-      console.log(spotList.find(function (spot) {
-        return spot.row === i && spot.column === j;
-      }));
-    };
-
-    for (var j = 0; j < columns; j++) {
-      _loop2(j);
-    }
-
-    tableRows.push(rw);
-  };
-
-  for (var i = 0; i < rows; i++) {
-    _loop(i);
-  }
-
-  console.log(tableRows);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("section", {
     style: {
       padding: "1rem"
     }
-  }, isError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Something went wrong ..."), isLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Loading ...") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("tbody", null, tableRows.map(function (rw, index) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("tr", {
-      key: index
-    }, rw.map(function (spot) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
-        key: spot.id
-      }, "|", spot.row, ",", spot.column, "|"));
-    }));
-  })))));
+  }, isError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Something went wrong ..."), isLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "Loading ...") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("tr", null, spotList.map(function (spot) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
+      key: spot.id
+    }, "|", spot.row, ",", spot.column, "|"));
+  }))))));
 }
 
 /***/ }),
