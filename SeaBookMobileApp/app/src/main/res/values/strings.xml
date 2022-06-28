@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SeaBook-MobileApp</string>
+    <string name="seabook">Seabook</string>
+    <string name="localit">Località</string>
+    <string name="scegli_la_destinazione">Scegli la destinazione</string>
+    <string name="riepilogo">Riepilogo Ordine</string>
+</resources>
