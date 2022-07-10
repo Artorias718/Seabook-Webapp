@@ -22,7 +22,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    />
 
     <TextView
         android:id="@+id/textView"
@@ -78,10 +77,12 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+        android:layout_width="250dp"
         android:layout_height="600dp"
         android:layout_marginBottom="72dp"
+        android:layout_marginTop="52dp"
         android:orientation="vertical"
+        android:textColor="#FFA500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -93,7 +94,7 @@
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000000"></ListView>
+            android:textColor="#FFA500"></ListView>
 
     </LinearLayout>
 
@@ -101,9 +102,33 @@
         android:id="@+id/imageButton5"
         android:layout_width="40dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="176dp"
+        android:layout_marginBottom="154dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/sea_profile" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="150dp"
+        android:layout_height="375dp"
+        android:layout_marginBottom="72dp"
+        android:layout_marginTop="162dp"
+        android:orientation="vertical"
+        android:textColor="#FFA500"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_date">
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonMainPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Post stabilimento"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_date" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

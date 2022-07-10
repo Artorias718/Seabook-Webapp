@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonMain;
     String jsonFromServer;
     ListView listView;
+    Button newbtn;
+    public static final String EXTRA_TEXT = "com.example.application.example.EXTRA_TEXT";
 
     private final static String URL = "http://192.168.1.16:8080/api/v1/stabilimenti/";
     ArrayList<String> tutorialList = new ArrayList<String>();
@@ -42,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button button = (Button) findViewById(R.id.buttonMainPost);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivityPost();
+            }
+        });
 
         etDate = findViewById(R.id.et_date);
 
@@ -86,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
             HttpHandler sh = new HttpHandler();
 
-            String url = "http://192.168.1.16:8080/api/v1/stabilimenti";
+            String url = "http://192.168.1.16:8080/api/v1/stabilimenti/";
 
             String jsonStr = sh.makeServiceCall(url);
             Log.e(TAG, "Response from url: " + jsonStr);
@@ -132,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //GIO
     private String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
         String line = "";
@@ -155,9 +165,19 @@ public class MainActivity extends AppCompatActivity {
             for(int i=0; i < jsonArrLength; i++) {
                 JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
                 String name = jsonChildNode.getString("name");
-                tutorialList.add(name);
-                String address = jsonChildNode.getString("address");
-                tutorialList.add(address);
+                String id = jsonChildNode.getString("id");
+                newbtn = new Button(this);
+                newbtn.setText("Prenota-"+id);
+                newbtn.setMaxWidth(30);
+                tutorialList.add(name+"  "+id);
+                LinearLayout layout = (LinearLayout) findViewById(R.id.linearLayout2);
+                layout.addView(newbtn);
+                newbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        openActivity3(id);
+                    }
+                });
 
             }
 
@@ -176,38 +196,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*public class CallAPI extends AsyncTask<String, String, String> {
+    public void openActivity3(String id) {
+        String URL ="http://192.168.1.16:8080/api/v1/stabilimenti/"+id+"/lista_Posti";
+        Intent intent;
+        intent = new Intent(this,
+                Activity3.class);
+        intent.putExtra(EXTRA_TEXT, URL);
+        startActivity(intent);
+    }
 
-        public CallAPI(){
-            //set context variables if required
-        }
+    public void openActivityPost() {
+        Intent intent;
+        intent = new Intent(this,
+                ActivityPost.class);
+        startActivity(intent);
+    }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String urlString = params[0]; // URL to call
-            String data = params[1]; //data to post
-            OutputStream out = null;
-
-            try {
-                URL url = new URL(urlString);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                out = new BufferedOutputStream(urlConnection.getOutputStream());
-
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
-                writer.write(data);
-                writer.flush();
-                writer.close();
-                out.close();
-
-                urlConnection.connect();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }*/
 }
